@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  back:
+    build:
+      dockerfile: "Dockerfile"
+    volumes:
+      - ./:/api:rw, cached
+      - /api/node_modules
+    ports:
+      - 5000:5000
+    command: npm run start
+    depends_on:
+      db:
+        condition: service_healthy
+  
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: bragagre
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: mail-builder
+      PGDATA: customDataFolder
+    volumes:
+      - ./dbData:/var/lib/postgresql/data/customDataFolder
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d mail-builder -U bragagre" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
