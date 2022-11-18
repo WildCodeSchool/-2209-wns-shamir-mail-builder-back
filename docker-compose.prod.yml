@@ -5,7 +5,7 @@ services:
     build:
       dockerfile: "Dockerfile"
     volumes:
-      - ./:/api:rw, cached
+      - ./:/api:rw,cached
       - /api/node_modules
     ports:
       - 5000:5000
