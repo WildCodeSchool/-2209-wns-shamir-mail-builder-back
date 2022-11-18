@@ -3,7 +3,8 @@ version: "3.8"
 services:
   back:
     build:
-      dockerfile: "Dockerfile"
+      dockerfile: "Dockerfile.prod"
+      context: .
     volumes:
       - ./:/api:rw,cached
       - /api/node_modules

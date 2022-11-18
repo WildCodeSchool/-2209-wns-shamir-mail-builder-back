@@ -5,8 +5,6 @@ WORKDIR /api
 COPY package.json ./
 COPY package-lock.json ./
 
-CONTEXT: .
-
 RUN npm install
 
 COPY src ./src
