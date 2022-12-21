@@ -13,7 +13,7 @@ const start = async (): Promise<void> => {
     })
     const server = new ApolloServer({
       cors: {
-        origin: 'http://localhost:3000',
+        origin: '*',
         credentials: true,
       },
       schema
