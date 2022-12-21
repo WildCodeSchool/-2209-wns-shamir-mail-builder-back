@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -41,6 +42,7 @@ export class Rows {
   updatedAt!: Date;
 
   @ManyToOne(() => Layouts, (layouts) => layouts.rows)
+  @JoinColumn({ name: "layoutId" })
   layoutId!: Layouts;
 
   @OneToMany(() => Columns, (columns) => columns.rowId)

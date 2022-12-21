@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { Field, ObjectType } from "type-graphql";
 import { Rows } from "./Rows";
 
@@ -34,5 +40,6 @@ export class Columns {
   updatedAt!: Date;
 
   @ManyToOne(() => Rows, (rows) => rows.columns)
+  @JoinColumn({ name: "rowId" })
   rowId!: Rows;
 }

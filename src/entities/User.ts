@@ -3,6 +3,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -41,7 +42,8 @@ export class User {
   updatedAt!: Date;
 
   @ManyToOne(() => Subscription, (subscription) => subscription.user)
-  subscription!: Subscription;
+  @JoinColumn({ name: "subscriptionId" })
+  subscriptionId!: Subscription;
 
   @OneToMany(() => TemplateEmails, (templateEmails) => templateEmails.userId)
   templateEmails!: TemplateEmails[];

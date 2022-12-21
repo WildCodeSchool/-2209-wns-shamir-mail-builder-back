@@ -46,6 +46,6 @@ export class Subscription {
   @UpdateDateColumn()
   updatedAt!: Date;
 
-  @OneToMany(() => User, (user) => user.subscription)
+  @OneToMany(() => User, (user) => user.subscriptionId)
   user!: User;
 }

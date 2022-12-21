@@ -2,6 +2,7 @@ import { TemplateEmails } from "./TemplateEmails";
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -37,6 +38,7 @@ export class Layouts {
   updatedAt!: Date;
 
   @ManyToOne(() => TemplateEmails, (templateEmails) => templateEmails.layouts)
+  @JoinColumn({ name: "templateEmailId" })
   templateEmailId!: TemplateEmails;
 
   @OneToMany(() => Rows, (rows) => rows.layoutId)

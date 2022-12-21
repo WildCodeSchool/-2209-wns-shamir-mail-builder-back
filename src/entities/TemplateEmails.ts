@@ -3,6 +3,7 @@ import { Field, ObjectType } from "type-graphql";
 import {
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -41,6 +42,7 @@ export class TemplateEmails {
   updatedAt!: Date;
 
   @ManyToOne(() => User, (user) => user.templateEmails)
+  @JoinColumn({ name: "userId" })
   userId!: User;
 
   @OneToMany(() => Layouts, (layouts) => layouts.templateEmailId)
