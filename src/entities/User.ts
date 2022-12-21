@@ -31,7 +31,7 @@ export class User {
   @Field()
   phone!: string;
 
-  @Column()
+  @Column({unique: true})
   @Field()
   email!: string;
 
