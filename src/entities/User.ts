@@ -1,37 +1,53 @@
 import { Field, ObjectType } from "type-graphql";
-import { Column, Entity, PrimaryGeneratedColumn, OneToOne } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from "typeorm";
+import { Companies } from "./Companies";
 import { Subscription } from "./Subscription";
+import { TemplateEmails } from "./TemplateEmails";
 
 @ObjectType()
 @Entity()
 export class User {
-    @Field()
-    @PrimaryGeneratedColumn()
-    id?: number;
+  @Field()
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-    @Field()
-    @Column()
-    email!: string;
+  @Field()
+  @Column()
+  username!: string;
 
-    @Field()
-    @Column()
-    userName!: string;
+  @Column()
+  hashedPassword!: string;
 
-    @Column()
-    hashedPassword!: string;
+  @Column()
+  @Field()
+  phone!: string;
 
-    @Field()
-    @Column({nullable: true})
-    phoneNumber!: string;
+  @Column()
+  @Field()
+  email!: string;
 
-    @Column({default: new Date()})
-    createdAt!: Date;
+  @CreateDateColumn()
+  createdAt!: Date;
 
-    @Column({default: new Date()})
-    updatedAt!: Date;
+  @UpdateDateColumn()
+  updatedAt!: Date;
 
-    @Field()
-    @Column({nullable: true, default: 0})
-    @OneToOne(() => Subscription, (subscription) => subscription.userId)
-    subscriptionId!: number;
+  @ManyToOne(() => Subscription, (subscription) => subscription.user)
+  @JoinColumn({ name: "subscriptionId" })
+  subscriptionId!: Subscription;
+
+  @OneToMany(() => TemplateEmails, (templateEmails) => templateEmails.userId)
+  templateEmails!: TemplateEmails[];
+
+  @OneToMany(() => Companies, (companies) => companies.userId)
+  companies!: Companies[];
 }
