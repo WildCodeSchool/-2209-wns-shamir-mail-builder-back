@@ -10,16 +10,12 @@ export default {
         return await userRepository.findOneByOrFail({ email });
     },
 
-    getById: async (id: number): Promise<User> => {
-        return await userRepository.findOneByOrFail({ id });
-    },
-
-    create: async (email: string, userName: string, password: string, phoneNumber: string): Promise<User> => {
+    create: async (email: string, username: string, password: string, phone: string): Promise<User> => {
         const newUser = new User();
         newUser.email = email;
-        newUser.userName = userName;
+        newUser.username = username;
         newUser.hashedPassword = await argon2.hash(password);
-        newUser.phoneNumber = phoneNumber;
+        newUser.phone = phone;
         
         return await userRepository.save(newUser);
     },
