@@ -1,3 +1,1 @@
-export class UserResolver {
-
-};
+export class UserResolver {}
