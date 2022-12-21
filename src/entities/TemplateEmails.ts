@@ -1,3 +1,4 @@
+import { Companies } from "./Companies";
 import { User } from "./User";
 import { Field, ObjectType } from "type-graphql";
 import {
@@ -44,6 +45,10 @@ export class TemplateEmails {
   @ManyToOne(() => User, (user) => user.templateEmails)
   @JoinColumn({ name: "userId" })
   userId!: User;
+
+  @ManyToOne(() => Companies, (companies) => companies.templateEmails)
+  @JoinColumn({ name: "companyId" })
+  companyId!: Companies;
 
   @OneToMany(() => Layouts, (layouts) => layouts.templateEmailId)
   layouts!: Layouts[];

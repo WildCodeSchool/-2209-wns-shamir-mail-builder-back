@@ -1,8 +1,11 @@
+import { TemplateEmails } from "./TemplateEmails";
+import { MailSends } from "./MailSends";
 import {
   Column,
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Field, ObjectType } from "type-graphql";
@@ -75,4 +78,10 @@ export class Companies {
   @ManyToOne(() => User, (user) => user.companies)
   @JoinColumn({ name: "userId" })
   userId!: User;
+
+  @OneToMany(() => MailSends, (mailSends) => mailSends.companyId)
+  mailSends!: MailSends[];
+
+  @OneToMany(() => TemplateEmails, (templateEmails) => templateEmails.companyId)
+  templateEmails!: TemplateEmails[];
 }

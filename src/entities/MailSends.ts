@@ -1,5 +1,12 @@
+import { Companies } from "./Companies";
 import { Field, ObjectType } from "type-graphql";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 
 @ObjectType()
 @Entity()
@@ -35,4 +42,8 @@ export class MailSends {
   @Column()
   @Field()
   updatedAt!: Date;
+
+  @ManyToOne(() => Companies, (companies) => companies.mailSends)
+  @JoinColumn({ name: "companyId" })
+  companyId!: Companies;
 }
