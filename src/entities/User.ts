@@ -18,7 +18,7 @@ import { TemplateEmails } from "./TemplateEmails";
 export class User {
   @Field()
   @PrimaryGeneratedColumn()
-  id!: number;
+  id?: number;
 
   @Field()
   @Column()

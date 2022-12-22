@@ -6,11 +6,15 @@ import authService from "../services/authService";
 @Resolver(User)
 export class UserResolver {
     @Query(() => User)
-    async getOne(
-        @Arg("email") email: string
+    async getOneUser(
+        @Arg("email") email: string,
     ): Promise<User> {
+      try {
         const user = await userService.getByEmail(email);
         return user;
+      } catch (e) {
+        throw new Error("Error while getting user by email");
+      }
     };
     
     @Mutation(() => User)
