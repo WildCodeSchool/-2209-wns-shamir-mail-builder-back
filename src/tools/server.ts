@@ -1,15 +1,14 @@
 import { ApolloServer } from "apollo-server";
 import { dataSource } from "./utils";
-import * as dotenv from "dotenv";
 import { buildSchema } from "type-graphql";
 import authService from "../services/authService";
 import { UserResolver } from "../resolvers/userResolver";
+import { StripeResolver } from "../resolvers/StripeResolver";
 
 async function createServer(): Promise<ApolloServer> {
-    dotenv.config();
     await dataSource.initialize();
     const schema = await buildSchema({
-      resolvers: [UserResolver], 
+      resolvers: [UserResolver, StripeResolver],
       authChecker: ({ context }) => {
         console.log("CONTEXT", context);
 
