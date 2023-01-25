@@ -1,12 +1,10 @@
-import { ApolloServer } from "apollo-server";
-import { dataSource } from "./tools/utils";
-import { buildSchema } from "type-graphql";
 import createServer from "./tools/server";
-import { UserResolver } from "./resolvers/userResolver";
+import * as dotenv from "dotenv";
 
 const port = 5000;
 
 const start = async (): Promise<void> => {
+  dotenv.config();
   const server = await createServer();
   try {
     const { url }: { url: string } = await server.listen({ port });

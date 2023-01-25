@@ -26,7 +26,7 @@ describe('User resolver', () => {
           expect(response.data?.getOneUser).toBeDefined();
       })
 
-      it("should not retrieve a user", async () => {
+      it("should send an error for unregistered user", async () => {
         const getOneUserQuery = gql`
           query GetOneUser($email: String!) {
             getOneUser(email: $email) {
@@ -44,7 +44,7 @@ describe('User resolver', () => {
           expect(response.errors).toBeDefined();
       })
 
-      it("should retrieve a token", async () => {
+      it("should return a token", async () => {
         const getTokenMutation = gql`
           mutation GetToken($password: String!, $email: String!) {
             getToken(password: $password, email: $email)
@@ -63,7 +63,7 @@ describe('User resolver', () => {
         expect(response.data?.getToken).toBeDefined();
       });
 
-      it("should not retrieve a token", async () => {
+      it("should send an error for invalid credentials", async () => {
         const getTokenMutation = gql`
           mutation GetToken($password: String!, $email: String!) {
             getToken(password: $password, email: $email)
