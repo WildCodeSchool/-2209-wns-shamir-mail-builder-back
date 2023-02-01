@@ -3,7 +3,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
@@ -30,7 +30,7 @@ export class Subscription {
 
   @Field()
   @Column()
-  subscribtionStart!: Date;
+  subscribtionStart: Date = new Date();
 
   @Field()
   @Column()
@@ -41,11 +41,11 @@ export class Subscription {
   subscribtionStatus!: string;
 
   @CreateDateColumn()
-  createdAt!: Date;
+  createdAt: Date = new Date();
 
   @UpdateDateColumn()
-  updatedAt!: Date;
+  updatedAt: Date = new Date();
 
-  @OneToMany(() => User, (user) => user.subscriptionId)
+  @OneToOne(() => User, (user) => user.subscriptionId)
   user!: User;
 }
