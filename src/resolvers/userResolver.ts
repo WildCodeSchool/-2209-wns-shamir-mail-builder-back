@@ -19,13 +19,12 @@ export class UserResolver {
     
     @Mutation(() => User)
     async createUser(
-        @Arg("email") email: string,
-        @Arg("username") username: string,
-        @Arg("password") password: string,
-        @Arg("phone") phone: string,
+      @Arg("username") username: string,
+      @Arg("password") password: string,
+      @Arg("email") email: string,
+      @Arg("phone") phone: string,
         ): Promise<User> {
-        const user = await userService.create(email, username, password, phone);
-        return user;
+        return await userService.create(username, password, email, phone);
     };
 
     @Mutation(() => User)
@@ -44,7 +43,6 @@ export class UserResolver {
     try {
       // Récupérer l'utilisateur dans la bdd suivant l'email
       const user = await userService.getByEmail(email);
-      
       // Vérifier que ce sont les même mots de passe
       if (
         await authService.verifyPassword(password, user.hashedPassword)
@@ -52,6 +50,7 @@ export class UserResolver {
         // Créer un nouveau token => signer un token
         const token = authService.signJwt({
           email: user.email,
+          id: user.id,
         });
 
         return token;

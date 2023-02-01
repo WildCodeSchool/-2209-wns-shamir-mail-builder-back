@@ -1,11 +1,13 @@
-import { Query, Resolver } from "type-graphql";
+import { Query, Resolver, Authorized } from "type-graphql";
 import * as dotenv from "dotenv";
+import authService from "../services/authService";
 dotenv.config();
 
 const stripe = require("stripe")(process.env.STRIPE_TEST_SECRET_KEY);
 
 @Resolver()
 export class StripeResolver {
+    @Authorized('TOTO')
     @Query(() => String)
     async createSubscriptionSession(): Promise<string> {
         const session = await stripe.checkout.sessions.create({

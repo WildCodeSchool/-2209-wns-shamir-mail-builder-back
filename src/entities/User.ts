@@ -4,8 +4,8 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
-  ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
@@ -27,27 +27,27 @@ export class User {
   @Column()
   hashedPassword!: string;
 
-  @Column()
-  @Field()
-  phone!: string;
-
   @Column({unique: true})
   @Field()
   email!: string;
+  
+  @Column({ nullable: true})
+  @Field()
+  phone!: string;
 
   @CreateDateColumn()
-  createdAt!: Date;
+  createdAt?: Date = new Date();
 
   @UpdateDateColumn()
-  updatedAt!: Date;
+  updatedAt?: Date = new Date();
 
-  @ManyToOne(() => Subscription, (subscription) => subscription.user)
+  @OneToOne(() => Subscription, (subscription) => subscription.user)
   @JoinColumn({ name: "subscriptionId" })
-  subscriptionId!: Subscription;
+  subscriptionId?: Subscription;
 
   @OneToMany(() => TemplateEmails, (templateEmails) => templateEmails.userId)
-  templateEmails!: TemplateEmails[];
+  templateEmails?: TemplateEmails[];
 
   @OneToMany(() => Companies, (companies) => companies.userId)
-  companies!: Companies[];
+  companies?: Companies[];
 }

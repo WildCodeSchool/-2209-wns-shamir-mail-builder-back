@@ -9,8 +9,9 @@ async function createServer(): Promise<ApolloServer> {
     await dataSource.initialize();
     const schema = await buildSchema({
       resolvers: [UserResolver, StripeResolver],
-      authChecker: ({ context }) => {
+      authChecker: ({ context }, roles) => {
         console.log("CONTEXT", context);
+        console.log('roles', roles)
 
         if (context.user === undefined) {
             return false;
