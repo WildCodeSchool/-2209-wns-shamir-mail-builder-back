@@ -7,7 +7,7 @@ const stripe = require("stripe")(process.env.STRIPE_TEST_SECRET_KEY);
 
 @Resolver()
 export class StripeResolver {
-    @Authorized('TOTO')
+    @Authorized()
     @Query(() => String)
     async createSubscriptionSession(): Promise<string> {
         const session = await stripe.checkout.sessions.create({
