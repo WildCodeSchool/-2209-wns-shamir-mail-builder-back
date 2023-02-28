@@ -30,15 +30,15 @@ export class Subscription {
 
   @Field()
   @Column()
-  subscribtionStart: Date = new Date();
+  subscriptionStart: Date = new Date();
 
   @Field()
   @Column()
-  subscribtionEnd!: Date;
+  subscriptionEnd!: Date;
 
   @Field()
   @Column()
-  subscribtionStatus!: string;
+  subscriptionStatus!: string;
 
   @CreateDateColumn()
   createdAt: Date = new Date();
@@ -47,5 +47,5 @@ export class Subscription {
   updatedAt: Date = new Date();
 
   @OneToOne(() => User, (user) => user.subscriptionId)
-  user!: User;
+  user?: User;
 }
