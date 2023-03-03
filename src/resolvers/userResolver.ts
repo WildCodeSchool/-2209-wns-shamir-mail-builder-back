@@ -1,4 +1,4 @@
-import { Arg, Mutation, Query, Resolver, Authorized } from "type-graphql";
+import { Arg, Mutation, Query, Resolver } from "type-graphql";
 import { User } from "../entities/User";
 import userService from "../services/userService";
 import authService from "../services/authService";
@@ -84,7 +84,6 @@ export class UserResolver {
     }
   }
 
-    @Authorized()
     @Mutation(() => User)
     async saveUserSub(
       @Arg("subscription") subscription: SubscriptionInput,

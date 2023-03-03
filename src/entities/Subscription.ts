@@ -25,7 +25,7 @@ export class Subscription {
   info!: string;
 
   @Field()
-  @Column()
+  @Column('decimal', { scale: 2, nullable: true })
   price!: number;
 
   @Field()

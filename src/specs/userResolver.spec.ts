@@ -8,6 +8,27 @@ describe('User resolver', () => {
         server = await createServer();
       });
 
+      it("should create a user and return his email", async () => {
+        const createUserQuery = gql`
+          mutation CreateUser($username: String!, $password: String!, $email: String!, $phone: String!) {
+            createUser(username: $username, password: $password, email: $email, phone: $phone) {
+              email
+            }
+        }
+        `;
+        
+        const response = await server.executeOperation({
+            query: createUserQuery,
+            variables: {
+              username: "Joel Miller",
+              password: "cordyceps",
+              email: "joel.miller@gmail.com",
+              phone: "0123456789",
+            },
+          });
+          expect(response.data?.createUser).toBeDefined();
+      })
+
       it("should retrieve a user and return his email", async () => {
         const getOneUserQuery = gql`
           query GetOneUser($email: String!) {
@@ -20,7 +41,7 @@ describe('User resolver', () => {
         const response = await server.executeOperation({
             query: getOneUserQuery,
             variables: {
-              email: "Toto@gmail.com"
+              email: "joel.miller@gmail.com"
             },
           });
           expect(response.data?.getOneUser).toBeDefined();
@@ -54,8 +75,8 @@ describe('User resolver', () => {
         const response = await server.executeOperation({
           query: getTokenMutation,
           variables: {
-            password: "password",
-            email: "Toto@gmail.com",
+            password: "cordyceps",
+            email: "joel.miller@gmail.com",
           },
         });
     
@@ -74,7 +95,7 @@ describe('User resolver', () => {
           query: getTokenMutation,
           variables: {
             password: "dkqsgdqjky",
-            email: "Toto@gmail.com",
+            email: "joel.miller@gmail.com",
           },
         });
     
