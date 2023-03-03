@@ -10,7 +10,7 @@ describe('User resolver', () => {
 
       it("should create a user and return his email", async () => {
         const createUserQuery = gql`
-          query CreateUser($username: String!, $password: String!, $email: String!, $phone: String!) {
+          mutation CreateUser($username: String!, $password: String!, $email: String!, $phone: String!) {
             createUser(username: $username, password: $password, email: $email, phone: $phone) {
               email
             }
