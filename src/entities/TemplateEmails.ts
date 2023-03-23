@@ -6,10 +6,8 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Layouts } from "./Layouts";
 
 @ObjectType()
 @Entity()
@@ -49,7 +47,4 @@ export class TemplateEmails {
   @ManyToOne(() => Companies, (companies) => companies.templateEmails)
   @JoinColumn({ name: "companyId" })
   companyId!: Companies;
-
-  @OneToMany(() => Layouts, (layouts) => layouts.templateEmailId)
-  layouts!: Layouts[];
 }

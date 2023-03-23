@@ -9,8 +9,8 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Field, ObjectType } from "type-graphql";
-import { Rows } from "./Rows";
 import { User } from "./User";
+import {Layout} from "./Layout";
 
 @ObjectType()
 @Entity()
@@ -84,4 +84,8 @@ export class Companies {
 
   @OneToMany(() => TemplateEmails, (templateEmails) => templateEmails.companyId)
   templateEmails!: TemplateEmails[];
+
+  @Field(() => [Layout], { nullable: true })
+  @OneToMany(() => Layout, (layout) => layout.companyId, { eager: true })
+  layouts!: Layout[];
 }

@@ -73,6 +73,7 @@ export class UserResolver {
         // Créer un nouveau token => signer un token
         const token = authService.signJwt({
           email: user.email,
+          id: user.id,
         });
 
         return token;
@@ -91,6 +92,13 @@ export class UserResolver {
       @Arg("email") email: string,
     ): Promise<User> {
       return await userService.saveUserSub(email, subscription);
+    }
+
+    @Query(() => User)
+    async getUserLayout(
+      @Arg('userId') userId: number,
+    ): Promise<User> {
+      return await userService.getUserLayout(userId);
     }
   
 };

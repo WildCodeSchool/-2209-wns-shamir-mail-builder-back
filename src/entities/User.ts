@@ -41,7 +41,7 @@ export class User {
   @UpdateDateColumn()
   updatedAt?: Date = new Date();
 
-  @Field({ nullable: true})
+  @Field(() => Subscription,{ nullable: true})
   @OneToOne(() => Subscription, (subscription) => subscription.user, {cascade: true, eager: true})
   @JoinColumn({ name: "subscriptionId" })
   subscriptionId?: Subscription;
@@ -49,6 +49,7 @@ export class User {
   @OneToMany(() => TemplateEmails, (templateEmails) => templateEmails.userId)
   templateEmails?: TemplateEmails[];
 
-  @OneToMany(() => Companies, (companies) => companies.userId)
+  @Field(() => [Companies], { nullable: true })
+  @OneToMany(() => Companies, (companies) => companies.userId, {cascade: true, eager: true})
   companies?: Companies[];
 }
