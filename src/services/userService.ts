@@ -35,4 +35,8 @@ export default {
         userToUpdate.subscriptionId = subscription;
         return await userRepository.save(userToUpdate);
     },
+
+    getUserLayout: async (userId: number): Promise<User> => {
+        return await userRepository.findOneByOrFail({ id: userId });
+    }
 }

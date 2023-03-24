@@ -1,26 +1,29 @@
-import { ApolloServer } from "apollo-server";
+import { ApolloServer } from "apollo-server-express";
 import { dataSource } from "./utils";
 import { buildSchema } from "type-graphql";
 import authService from "../services/authService";
 import { UserResolver } from "../resolvers/userResolver";
 import { StripeResolver } from "../resolvers/StripeResolver";
 import { SubscriptionResolver } from "../resolvers/SubscriptionResolver";
+import {LayoutResolver} from "../resolvers/LayoutResolver";
+import express, {Express} from 'express';
 
-async function createServer(): Promise<ApolloServer> {
+async function createServer(): Promise<Express> {
     await dataSource.initialize();
     const schema = await buildSchema({
-      resolvers: [UserResolver, StripeResolver, SubscriptionResolver],
+      resolvers: [UserResolver, StripeResolver, SubscriptionResolver, LayoutResolver],
+      validate: { forbidUnknownValues: false },
       authChecker: ({ context }) => {
         console.log("CONTEXT", context);
-
         if (context.user === undefined) {
             return false;
           }
           return false;
       },
     });
-    return new ApolloServer({
+    const server = new ApolloServer({
       schema,
+      csrfPrevention: true,
       context: ({ req }) => {
         if (
           req?.headers.authorization === undefined ||
@@ -41,6 +44,16 @@ async function createServer(): Promise<ApolloServer> {
         }
       },
     });
+    await server.start();
+
+    const app = express();
+    app.get('/upload', async (req, res) => {
+      res.send('Upload entry');
+    })
+
+    server.applyMiddleware({ app, path: "/graphql" });
+
+    return app;
   }
 
   export default createServer;

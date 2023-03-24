@@ -7,8 +7,8 @@ const start = async (): Promise<void> => {
   dotenv.config();
   const server = await createServer();
   try {
-    const { url }: { url: string } = await server.listen({ port });
-    console.log(`Server ready at ${url}`);
+    await server.listen({ port });
+    console.log(`Server ready at http://localhost:${port}/graphql`);
   } catch (e) {
     console.error("Error starting the server");
   }
