@@ -32,6 +32,9 @@ export default {
 
     saveUserSub: async (email: string, subscription: Subscription): Promise<User> => {
         const userToUpdate = await userRepository.findOneByOrFail({ email });
+        if (userToUpdate === null) {
+            throw new Error("Utilisateur introuvable");
+        }
         userToUpdate.subscriptionId = subscription;
         return await userRepository.save(userToUpdate);
     },

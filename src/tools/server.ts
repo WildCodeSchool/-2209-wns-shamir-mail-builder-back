@@ -10,12 +10,15 @@ async function createServer(): Promise<ApolloServer> {
     await dataSource.initialize();
     const schema = await buildSchema({
       resolvers: [UserResolver, StripeResolver, SubscriptionResolver],
-      authChecker: ({ context }) => {
-        console.log("CONTEXT", context);
+      authChecker: ({ context }, roles) => {
+        console.log("CONTEXT", context, roles);
 
         if (context.user === undefined) {
             return false;
           }
+        if (roles.length === 0) {
+          return true;
+        }
           return false;
       },
     });
@@ -31,7 +34,6 @@ async function createServer(): Promise<ApolloServer> {
           try {
             const bearer = req.headers.authorization.split("Bearer ")[1];
             const userPayload = authService.verifyToken(bearer);
-            console.log(userPayload)
   
             return { user: userPayload };
           } catch (e) {
