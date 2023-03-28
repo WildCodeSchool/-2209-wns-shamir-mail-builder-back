@@ -1,4 +1,4 @@
-import { Arg, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, Mutation, Query, Resolver, Ctx } from "type-graphql";
 import { User } from "../entities/User";
 import userService from "../services/userService";
 import authService from "../services/authService";
@@ -35,7 +35,7 @@ export class UserResolver {
         const user = await userService.getByEmail(email);
         return user;
       } catch (e) {
-        throw new Error("Error while getting user by email");
+        throw new Error("L'utilisateur avec l'email renseigné est introuvable");
       }
     };
     
@@ -46,7 +46,11 @@ export class UserResolver {
       @Arg("email") email: string,
       @Arg("phone") phone: string,
         ): Promise<User> {
-        return await userService.create(username, password, email, phone);
+          try {
+            return await userService.create(username, password, email, phone);
+          } catch (e) {
+            throw new Error("Erreur pendant la création de l'utilisateur");
+          }
     };
 
     @Mutation(() => User)
@@ -65,7 +69,9 @@ export class UserResolver {
     try {
       // Récupérer l'utilisateur dans la bdd suivant l'email
       const user = await userService.getByEmail(email);
-      console.log(user);
+      if (user === null) {
+        throw new Error("Aucun compte avec cette adresse mail");
+      }
       // Vérifier que ce sont les même mots de passe
       if (
         await authService.verifyPassword(password, user.hashedPassword)
@@ -81,16 +87,20 @@ export class UserResolver {
         throw new Error();
       }
     } catch (e) {
-      throw new Error("Invalid credentials");
+      throw new Error("Mot de passe incorrect");
     }
   }
 
     @Mutation(() => User)
     async saveUserSub(
-      @Arg("subscription") subscription: SubscriptionInput,
       @Arg("email") email: string,
+      @Arg("subscription") subscription: SubscriptionInput,
     ): Promise<User> {
-      return await userService.saveUserSub(email, subscription);
+      try {
+        return await userService.saveUserSub(email, subscription);
+      } catch (e) {
+        throw new Error("Erreur pendant l'enregistrement de l'abonnement");
+      }
     }
 
     @Query(() => User)
