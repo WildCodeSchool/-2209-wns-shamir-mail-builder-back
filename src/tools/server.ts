@@ -12,11 +12,15 @@ async function createServer(): Promise<ApolloServer> {
     const schema = await buildSchema({
       resolvers: [UserResolver, StripeResolver, SubscriptionResolver, LayoutResolver],
       validate: { forbidUnknownValues: false },
-      authChecker: ({ context }) => {
-        console.log("CONTEXT", context);
+      authChecker: ({ context }, roles) => {
+        console.log("CONTEXT", context, roles);
+
         if (context.user === undefined) {
             return false;
           }
+        if (roles.length === 0) {
+          return true;
+        }
           return false;
       },
     });
