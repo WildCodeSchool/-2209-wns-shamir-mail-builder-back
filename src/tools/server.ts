@@ -5,14 +5,15 @@ import authService from "../services/authService";
 import { UserResolver } from "../resolvers/userResolver";
 import { StripeResolver } from "../resolvers/StripeResolver";
 import { SubscriptionResolver } from "../resolvers/SubscriptionResolver";
+import {LayoutResolver} from "../resolvers/LayoutResolver";
 
 async function createServer(): Promise<ApolloServer> {
     await dataSource.initialize();
     const schema = await buildSchema({
-      resolvers: [UserResolver, StripeResolver, SubscriptionResolver],
-      authChecker: ({ context }, roles) => {
-        console.log("CONTEXT", context, roles);
-
+      resolvers: [UserResolver, StripeResolver, SubscriptionResolver, LayoutResolver],
+      validate: { forbidUnknownValues: false },
+      authChecker: ({ context }) => {
+        console.log("CONTEXT", context);
         if (context.user === undefined) {
             return false;
           }
@@ -44,5 +45,5 @@ async function createServer(): Promise<ApolloServer> {
       },
     });
   }
-
+  
   export default createServer;

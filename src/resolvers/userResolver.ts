@@ -79,6 +79,7 @@ export class UserResolver {
         // Créer un nouveau token => signer un token
         const token = authService.signJwt({
           email: user.email,
+          id: user.id,
         });
 
         return token;
@@ -100,6 +101,13 @@ export class UserResolver {
       } catch (e) {
         throw new Error("Erreur pendant l'enregistrement de l'abonnement");
       }
+    }
+
+    @Query(() => User)
+    async getUserLayout(
+      @Arg('userId') userId: number,
+    ): Promise<User> {
+      return await userService.getUserLayout(userId);
     }
   
 };
