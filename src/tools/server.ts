@@ -36,7 +36,6 @@ async function createServer(): Promise<ApolloServer> {
           try {
             const bearer = req.headers.authorization.split("Bearer ")[1];
             const userPayload = authService.verifyToken(bearer);
-            console.log(userPayload)
   
             return { user: userPayload };
           } catch (e) {
