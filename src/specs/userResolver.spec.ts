@@ -103,7 +103,7 @@ describe('User resolver', () => {
       });
 
       it("should save a subscription for a given user", async () => {
-        const saveUserSub = gql`
+        const saveUserSubQuery = gql`
           mutation SaveUserSub($email: String!, $subscription: SubscriptionInput!) {
             saveUserSub(email: $email, subscription: $subscription) {
               username
@@ -123,7 +123,7 @@ describe('User resolver', () => {
         }
     
         const response = await server.executeOperation({
-          query: saveUserSub,
+          query: saveUserSubQuery,
           variables: {
             email: "joel.miller@gmail.com",
             subscription: newSubscription,
