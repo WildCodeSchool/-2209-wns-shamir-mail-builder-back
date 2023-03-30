@@ -130,7 +130,7 @@ describe('User resolver', () => {
           },
         });
     
-        expect(response.data?.saveUserSub.username).toBeDefined();
+        expect(response.data?.saveUserSub?.username).toBeDefined();
       });
 
       
