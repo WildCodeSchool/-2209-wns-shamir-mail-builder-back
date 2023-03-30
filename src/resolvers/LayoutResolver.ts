@@ -11,8 +11,9 @@ export class LayoutResolver {
   async saveLayout(
     @Arg("layout") layout: LayoutInput,
     @Arg("id") id: number,
+    @Arg("preview", { nullable: true }) preview: string,
   ): Promise<Layout> {
-    return await layoutService.saveLayout(layout, id);
+    return await layoutService.saveLayout(layout, preview, id);
   }
 
   @Query(() => [Companies])
