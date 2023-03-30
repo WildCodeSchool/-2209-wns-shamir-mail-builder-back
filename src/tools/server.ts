@@ -2,16 +2,18 @@ import { ApolloServer } from "apollo-server";
 import { dataSource } from "./utils";
 import { buildSchema } from "type-graphql";
 import authService from "../services/authService";
-import { UserResolver } from "../resolvers/userResolver";
+import { UserResolver } from "../resolvers/UserResolver";
 import { StripeResolver } from "../resolvers/StripeResolver";
 import { SubscriptionResolver } from "../resolvers/SubscriptionResolver";
 import {LayoutResolver} from "../resolvers/LayoutResolver";
-import {CompaniesResolver} from "../resolvers/CompaniesResolver";
+import { TemplateEmailsResolver } from "../resolvers/templateEmailsResolver";
+import { CompaniesResolver } from "../resolvers/CompaniesResolver";
 
 async function createServer(): Promise<ApolloServer> {
     await dataSource.initialize();
     const schema = await buildSchema({
-      resolvers: [UserResolver, StripeResolver, SubscriptionResolver, LayoutResolver, CompaniesResolver],
+      resolvers: [UserResolver, StripeResolver, SubscriptionResolver, LayoutResolver, TemplateEmailsResolver, CompaniesResolver],
+
       validate: { forbidUnknownValues: false },
       authChecker: ({ context }, roles) => {
         console.log("CONTEXT", context, roles);
