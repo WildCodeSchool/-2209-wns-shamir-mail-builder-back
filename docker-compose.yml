@@ -24,7 +24,7 @@ services:
       POSTGRES_DB: mail-builder
       PGDATA: customDataFolder
     volumes:
-      - /dbData:/var/lib/postgresql/data/customDataFolder
+      - ./dbData:/var/lib/postgresql/data/customDataFolder
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d mail-builder -U bragagre" ]
       interval: 5s
