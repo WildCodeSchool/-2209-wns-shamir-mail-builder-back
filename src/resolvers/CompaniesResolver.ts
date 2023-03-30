@@ -11,3 +11,4 @@ export class CompaniesResolver {
     return await companiesService.createCompany(company);
   }
 }
+
