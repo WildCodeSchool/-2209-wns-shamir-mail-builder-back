@@ -7,9 +7,12 @@ import {Layout} from "../entities/Layout";
 export const layoutRepository: Repository<Layout> = dataSource.getRepository(Layout);
 export const companiesRepository: Repository<Companies> = dataSource.getRepository(Companies);
 export default {
-  saveLayout: async (layoutInput: LayoutInput, id: number): Promise<Layout> => {
+  saveLayout: async (layoutInput: LayoutInput, preview: string, id: number): Promise<Layout> => {
     const layout = await layoutRepository.findOneByOrFail({id: id});
     layout.children = layoutInput.layout;
+    if (preview) {
+      layout.preview = preview;
+    }
     return await layoutRepository.save(layout);
   },
   getLayout: async (userId: number): Promise<Companies[]> => {
