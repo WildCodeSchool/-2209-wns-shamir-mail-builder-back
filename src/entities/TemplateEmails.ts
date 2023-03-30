@@ -45,6 +45,7 @@ export class TemplateEmails {
   userId!: User;
 
   @ManyToOne(() => Companies, (companies) => companies.templateEmails)
+  @Field(() => Companies)
   @JoinColumn({ name: "companyId" })
   companyId!: Companies;
 }

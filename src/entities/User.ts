@@ -36,6 +36,7 @@ export class User {
   phone!: string;
 
   @CreateDateColumn()
+  @Field()
   createdAt?: Date = new Date();
 
   @UpdateDateColumn()
