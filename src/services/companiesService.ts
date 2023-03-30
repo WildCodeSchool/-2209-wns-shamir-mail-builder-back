@@ -1,21 +1,27 @@
-import { Repository } from "typeorm";
-import { Companies } from "../entities/Companies";
-import { dataSource } from "../tools/utils";
-import { userRepository } from "./userService";
-
-const companiesRepository: Repository<Companies> = dataSource.getRepository(Companies);
+import {CompaniesInput} from "../inputs/companiesInput";
+import {Companies} from "../entities/Companies";
+import userService from "./userService";
+import {companiesRepository} from "./layoutService";
 
 export default {
-    getAllCompanies: async (): Promise<Companies[]> => {
-        return await companiesRepository.find();
-    },
-
-    getById: async (companyId: number): Promise<Companies> => {
-        return await companiesRepository.findOneByOrFail({ id: companyId });
-    },
-
-    getUserCompanies: async (email: string): Promise<Companies[]> => {
-        const user = await userRepository.findOneByOrFail({ email });
-        return await companiesRepository.findBy({ userId: user });
-    },
+  createCompany: async (company: CompaniesInput): Promise<Companies> => {
+    const user = await userService.getByEmail('seveste.brandon@gmail.com')
+    const newCompany = new Companies();
+    newCompany.name = company.name;
+    newCompany.siret = company.siret;
+    newCompany.address = company.address;
+    newCompany.phone = company.phone;
+    newCompany.email = company.email;
+    newCompany.website = company.website;
+    newCompany.logo = company.logo;
+    newCompany.description = company.description;
+    newCompany.facebook = company.facebook;
+    newCompany.twitter = company.twitter;
+    newCompany.instagram = company.instagram;
+    newCompany.userId = user;
+    newCompany.subscribed = company.subscribed;
+    newCompany.createdAt = new Date();
+    newCompany.updatedAt = new Date();
+    return await companiesRepository.save(newCompany);
+  }
 }

@@ -13,6 +13,7 @@ async function createServer(): Promise<ApolloServer> {
     await dataSource.initialize();
     const schema = await buildSchema({
       resolvers: [UserResolver, StripeResolver, SubscriptionResolver, LayoutResolver, TemplateEmailsResolver, CompaniesResolver],
+
       validate: { forbidUnknownValues: false },
       authChecker: ({ context }, roles) => {
         console.log("CONTEXT", context, roles);
@@ -48,5 +49,5 @@ async function createServer(): Promise<ApolloServer> {
       },
     });
   }
-  
+
   export default createServer;
