@@ -20,7 +20,7 @@ jobs:
           POSTGRES_PASSWORD: example
         # Set health checks to wait until postgres has started
         options: >-
-          --health-cmd pg_isready -d mail-builder -U bragagre -
+          --health-cmd pg_isready -U bragagre -
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
