@@ -1,5 +1,4 @@
-name: Unit tests with jest
-
+name: PostgreSQL service example
 on: push
 
 jobs:
@@ -17,10 +16,12 @@ jobs:
         image: postgres
         # Provide the password for postgres
         env:
+          POSTGRES_USER: bragagre
           POSTGRES_PASSWORD: example
+          POSTGRES_DB: mail-builder
         # Set health checks to wait until postgres has started
         options: >-
-          --health-cmd pg_isready -U bragagre -
+          --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
@@ -39,7 +40,4 @@ jobs:
         # the table with data, and then retrieves the data.
         run: npm run test
         env:
-          POSTGRES_HOST: db
-          # The default PostgreSQL port
-          POSTGRES_PORT: 5432
           JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
