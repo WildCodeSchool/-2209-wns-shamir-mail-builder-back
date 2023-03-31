@@ -7,8 +7,8 @@
     "test": "jest",
     "dev": "ts-node-dev src/index.ts",
     "start": "ts-node src/index.ts",
-    "build": "tsc",
-    "prod": "node build/index.js"
+    "build": "tsc -p tsconfig.json",
+    "prod": "node src/index.js"
   },
   "repository": {
     "type": "git",
