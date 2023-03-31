@@ -16,6 +16,7 @@ jobs:
         # Docker Hub image
         image: postgres
         # Provide the password for postgres
+        user: postgres
         env:
           POSTGRES_HOST: db
           POSTGRES_USER: bragagre
