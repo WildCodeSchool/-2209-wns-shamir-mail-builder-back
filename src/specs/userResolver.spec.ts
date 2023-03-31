@@ -101,4 +101,33 @@ describe('User resolver', () => {
     
         expect(response.errors).toBeDefined();
       });
+
+      it("should save a subscription for a given user", async () => {
+        const saveUserSubQuery = gql`
+          mutation SaveUserSub($email: String!, $subscription: SubscriptionInput!) {
+            saveUserSub(email: $email, subscription: $subscription) {
+            username
+            }
+          }
+        `;
+        
+        const nextMonth = new Date().getMonth() + 1;
+        
+        const newSubscription = {
+        name: "abonnement",
+        info: "mensuel",
+        price: 9.99,
+        subscriptionStart: new Date(),
+        subscriptionEnd: new Date(new Date().setMonth(nextMonth)),
+        subscriptionStatus: 'actif',
+        }
+        const response = await server.executeOperation({
+        query: saveUserSubQuery,
+        variables: {
+        email: "joel.miller@gmail.com",
+        subscription: newSubscription,
+        },
+        });
+        expect(response.data?.saveUserSub).toBeDefined();
+      });
 })
