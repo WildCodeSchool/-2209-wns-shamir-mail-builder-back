@@ -1,6 +1,6 @@
 name: Unit tests with jest
-on:
-  push
+
+on: push
 
 jobs:
   # Label of the container job
