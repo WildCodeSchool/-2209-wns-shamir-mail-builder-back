@@ -2,15 +2,14 @@ version: "3.8"
 
 services:
   back:
-    build:
-      dockerfile: "Dockerfile.prod"
-      context: .
-    volumes:
-      - ./:/api:rw,cached
-      - /api/node_modules
+    image: brandonsev/mailsaw-server
+    command: sh -c "npm run build && npm run prod"
     ports:
       - 5000:5000
-    command: npm run start
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
     depends_on:
       db:
         condition: service_healthy
@@ -18,13 +17,10 @@ services:
   db:
     image: postgres
     restart: always
-    environment:
-      POSTGRES_USER: bragagre
-      POSTGRES_PASSWORD: example
-      POSTGRES_DB: mail-builder
-      PGDATA: customDataFolder
+    env_file:
+      - .env
     volumes:
-      - ./dbData:/var/lib/postgresql/data/customDataFolder
+      - /dbData:/var/lib/postgresql/data/customDataFolder
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d mail-builder -U bragagre" ]
       interval: 5s
