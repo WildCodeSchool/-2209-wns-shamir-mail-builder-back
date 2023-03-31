@@ -18,7 +18,7 @@ jobs:
         # Provide the password for postgres
         env:
           POSTGRES_HOST: db
-          POSTG_USER: bragagre
+          POSTGRES_USER: bragagre
           POSTGRES_PASSWORD: example
           POSTGRES_DB: mail-builder
         # Set health checks to wait until postgres has started
