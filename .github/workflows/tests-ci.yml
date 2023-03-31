@@ -16,12 +16,11 @@ jobs:
         # Docker Hub image
         image: postgres
         # Provide the password for postgres
-        user: root
         env:
-          POSTGRES_HOST: db
-          POSTGRES_USER: bragagre
-          POSTGRES_PASSWORD: example
-          POSTGRES_DB: mail-builder
+          POSTGRES_HOST: 'db'
+          POSTGRES_USER: 'bragagre'
+          POSTGRES_PASSWORD: 'example'
+          POSTGRES_DB: 'mail-builder'
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
