@@ -22,10 +22,7 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-        POSTGRES_HOST: db
-        POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-        POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-        POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+        
         ports:
           # Maps tcp port 5432 on service container to the host
           - 5432:5432
@@ -41,7 +38,11 @@ jobs:
 
       - name: Connect to PostgreSQL
         # Runs a script that creates a PostgreSQL table, populates
-        # the table with data, and then retrieves the data.    
+        # the table with data, and then retrieves the data.
+        POSTGRES_HOST: db
+        POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+        POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        POSTGRES_DB: ${{ secrets.POSTGRES_DB }}  
         run: npm run test
         env:
           JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
