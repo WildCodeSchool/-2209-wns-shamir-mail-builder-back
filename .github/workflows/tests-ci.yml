@@ -47,5 +47,6 @@ jobs:
           POSTGRES_HOST: db
           # The default PostgreSQL port
           POSTGRES_PORT: 5432
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
         run: npm run test
