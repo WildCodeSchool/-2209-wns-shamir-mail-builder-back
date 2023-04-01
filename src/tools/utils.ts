@@ -10,11 +10,11 @@ dotenv.config();
 
 export const dataSource = new DataSource({
   type: "postgres",
-  host: process.env.DB_HOST,
+  host: "db",
   port: 5432,
-  username: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
+  username: "bragagre",
+  password: "example",
+  database: "mail-builder",
   synchronize: true,
   entities: [
     User,
