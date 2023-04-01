@@ -39,7 +39,7 @@ jobs:
       - name: Connect to PostgreSQL
         # Runs a script that creates a PostgreSQL table, populates
         # the table with data, and then retrieves the data.
-        run: npm run test
         env:
           DATABASE_URL: 'postgresql://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@db:5432/${{ secrets.POSTGRES_DB }}'
           JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
+        run: npm run test
