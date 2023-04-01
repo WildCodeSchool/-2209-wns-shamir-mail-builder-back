@@ -16,7 +16,7 @@ jobs:
         image: postgres
         # Provide the password for postgres
         env:
-          POSTGRES_USER: bragagre
+          POSTGRES_PASSWORD: example
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
@@ -40,6 +40,6 @@ jobs:
         env:
           POSTGRES_HOST: db
           POSTGRES_PORT: 5432
-          POSTGRES_PASSWORD: example
+          POSTGRES_USER: bragagre
           POSTGRES_DB: mail-builder
           JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
