@@ -16,6 +16,8 @@ jobs:
         image: postgres
         # Provide the password for postgres
         env:
+          POSTGRES_HOST: db
+          POSTGRES_PORT: 5432
           POSTGRES_USER: bragagre
           POSTGRES_PASSWORD: example
           POSTGRES_DB: mail-builder
