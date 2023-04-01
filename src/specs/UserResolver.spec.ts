@@ -117,8 +117,8 @@ describe('User resolver', () => {
         name: "abonnement",
         info: "mensuel",
         price: 9.99,
-        subscriptionStart: new Date(),
-        subscriptionEnd: new Date(new Date().setMonth(nextMonth)),
+        subscriptionStart: new Date().toISOString(),
+        subscriptionEnd: new Date(new Date().setMonth(nextMonth)).toISOString(),
         subscriptionStatus: 'actif',
         }
         const response = await server.executeOperation({
