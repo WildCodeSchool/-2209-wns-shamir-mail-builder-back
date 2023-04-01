@@ -7,7 +7,6 @@ jobs:
     # Containers must run in Linux based operating systems
     runs-on: ubuntu-latest
     container: node:16
-
     # Service containers to run with `container-job`
     services:
       # Label used to access the service container
@@ -16,15 +15,19 @@ jobs:
         image: postgres
         # Provide the password for postgres
         env:
-          POSTGRES_USER: bragagre
-          POSTGRES_PASSWORD: example
-          POSTGRES_DB: mail-builder
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+        
+        ports:
+          # Maps tcp port 5432 on service container to the host
+          - 5432:5432
     steps:
       # Downloads a copy of the code in your repository before running CI tests
       - name: Check out repository code
@@ -38,6 +41,12 @@ jobs:
       - name: Connect to PostgreSQL
         # Runs a script that creates a PostgreSQL table, populates
         # the table with data, and then retrieves the data.
-        run: npm run test
+        
         env:
+          # The hostname used to communicate with the PostgreSQL service container
+          POSTGRES_HOST: db
+          # The default PostgreSQL port
+          POSTGRES_PORT: 5432
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
+        run: npm run test
