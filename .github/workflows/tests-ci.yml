@@ -17,6 +17,8 @@ jobs:
         # Provide the password for postgres
         env:
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
@@ -38,6 +40,4 @@ jobs:
         # the table with data, and then retrieves the data.
         run: npm run test
         env:
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
           JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
