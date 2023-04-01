@@ -38,7 +38,7 @@ jobs:
       - name: Connect to PostgreSQL
         # Runs a script that creates a PostgreSQL table, populates
         # the table with data, and then retrieves the data.
-        run: node src/index.ts
+        run: npm run dev
           env:
             POSTGRES_HOST: db
             POSTGRES_PORT: 5432
