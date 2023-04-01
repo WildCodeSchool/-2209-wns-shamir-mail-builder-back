@@ -10,8 +10,6 @@ jobs:
 
     # Service containers to run with `container-job`
     services:
-    env:
-      DATABASE_URL: 'postgresql://${{ secrets.POSTGRES_USER }}:${{ secrets.POSTGRES_PASSWORD }}@db:5432/${{ secrets.POSTGRES_DB }}'
       # Label used to access the service container
       db:
         # Docker Hub image
