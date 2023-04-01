@@ -40,4 +40,6 @@ jobs:
         # the table with data, and then retrieves the data.
         run: npm run test
         env:
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
           JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
