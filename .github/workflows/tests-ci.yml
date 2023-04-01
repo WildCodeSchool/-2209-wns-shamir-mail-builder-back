@@ -16,11 +16,7 @@ jobs:
         image: postgres
         # Provide the password for postgres
         env:
-          POSTGRES_HOST: db
-          POSTGRES_PORT: 5432
           POSTGRES_USER: bragagre
-          POSTGRES_PASSWORD: example
-          POSTGRES_DB: mail-builder
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
@@ -42,4 +38,8 @@ jobs:
         # the table with data, and then retrieves the data.
         run: npm run test
         env:
+          POSTGRES_HOST: db
+          POSTGRES_PORT: 5432
+          POSTGRES_PASSWORD: example
+          POSTGRES_DB: mail-builder
           JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
