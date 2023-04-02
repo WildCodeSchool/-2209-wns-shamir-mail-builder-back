@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage --detectOpenHandles --forceExit",
     "test:watch": "export NODE_ENV=test && jest --watch",
     "dev": "ts-node-dev src/index.ts",
     "start": "ts-node src/index.ts",

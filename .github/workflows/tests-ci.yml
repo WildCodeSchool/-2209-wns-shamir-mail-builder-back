@@ -25,6 +25,8 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+        ports:
+          - 5432:5432
     steps:
       # Downloads a copy of the code in your repository before running CI tests
       - name: Check out repository code
@@ -40,4 +42,7 @@ jobs:
         # the table with data, and then retrieves the data.
         run: npm run test
         env:
+          DB_USER_TEST: bragagre
+          DB_PASSWORD_TEST: example
+          DB_NAME_TEST: mail-builder
           JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
