@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  back:
+    build:
+      dockerfile: "Dockerfile"
+      context: .
+    volumes:
+      - ./:/api:rw,cached
+      - /api/node_modules
+    ports:
+      - 5000:5000
+    command: npm run test:watch
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: mail-builder-test
+      PGDATA: customDataFolder
+    volumes:
+      - ./dbDataTest:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d mail-builder-test -U test" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    ports:
+      - 5432:5432
