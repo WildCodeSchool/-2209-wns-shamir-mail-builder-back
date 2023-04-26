@@ -6,9 +6,10 @@ import companiesService from "../services/companiesService";
 export class CompaniesResolver {
   @Mutation(() => Companies)
   async createCompany(
+    @Arg("userEmail") userEmail: string,
     @Arg("company") company: CompaniesInput,
   ): Promise<Companies> {
-    return await companiesService.createCompany(company);
+    return await companiesService.createCompany(company, userEmail);
   }
 }
 
