@@ -8,23 +8,23 @@ import { SubscriptionResolver } from "../resolvers/SubscriptionResolver";
 import {LayoutResolver} from "../resolvers/LayoutResolver";
 import { TemplateEmailsResolver } from "../resolvers/templateEmailsResolver";
 import { CompaniesResolver } from "../resolvers/CompaniesResolver";
+import {ModuleResolver} from "../resolvers/ModuleResolver";
 
 async function createServer(): Promise<ApolloServer> {
     await dataSource.initialize();
     const schema = await buildSchema({
-      resolvers: [UserResolver, StripeResolver, SubscriptionResolver, LayoutResolver, TemplateEmailsResolver, CompaniesResolver],
+      resolvers: [UserResolver, StripeResolver, SubscriptionResolver, LayoutResolver, TemplateEmailsResolver, CompaniesResolver, ModuleResolver],
 
       validate: { forbidUnknownValues: false },
       authChecker: ({ context }, roles) => {
         console.log("CONTEXT", context, roles);
-
         if (context.user === undefined) {
-            return false;
-          }
+          return false;
+        }
         if (roles.length === 0) {
           return true;
         }
-          return false;
+        return false;
       },
     });
     return new ApolloServer({

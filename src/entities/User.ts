@@ -12,6 +12,7 @@ import {
 import { Companies } from "./Companies";
 import { Subscription } from "./Subscription";
 import { TemplateEmails } from "./TemplateEmails";
+import {Module} from "./Module";
 
 @ObjectType()
 @Entity()
@@ -53,4 +54,8 @@ export class User {
   @Field(() => [Companies], { nullable: true })
   @OneToMany(() => Companies, (companies) => companies.userId, {cascade: true, eager: true})
   companies?: Companies[];
+
+  @Field(() => [Module], { nullable: true })
+  @OneToMany(() => Module, (module) => module.user, {cascade: true, eager: true})
+  modules?: Module[];
 }

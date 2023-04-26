@@ -15,9 +15,9 @@ jobs:
         image: postgres
         # Provide the password for postgres
         env:
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_PASSWORD: test
+          POSTGRES_USER: test
+          POSTGRES_DB: mail-builder-test
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
@@ -44,9 +44,9 @@ jobs:
         
         env:
           # The hostname used to communicate with the PostgreSQL service container
-          POSTGRES_HOST: db
-          # The default PostgreSQL port
-          POSTGRES_PORT: 5432
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          DB_HOST: db
+          DB_USER_TEST: test
+          DB_PASSWORD_TEST: test
+          DB_NAME_TEST: mail-builder-test
           JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
-        run: npm run test
+        run: export NODE_ENV=test && npm run test

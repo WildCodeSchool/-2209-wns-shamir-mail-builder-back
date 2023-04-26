@@ -10,31 +10,25 @@ services:
       - /api/node_modules
     ports:
       - 5000:5000
-    command: npm run dev
-    env_file:
-      - .env
+    command: npm run test:watch
     depends_on:
       db:
         condition: service_healthy
-  
+
   db:
     image: postgres
     restart: always
     environment:
-      POSTGRES_USER: bragagre
-      POSTGRES_PASSWORD: example
-      POSTGRES_DB: mail-builder
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: mail-builder-test
       PGDATA: customDataFolder
     volumes:
-      - ./dbData:/var/lib/postgresql/data/customDataFolder
+      - ./dbDataTest:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d mail-builder -U bragagre" ]
+      test: ["CMD-SHELL", "pg_isready -d mail-builder-test -U test" ]
       interval: 5s
       timeout: 5s
       retries: 10
-
-  adminer:
-    image: adminer
-    restart: always
     ports:
-      - 8080:8080
+      - 5432:5432
