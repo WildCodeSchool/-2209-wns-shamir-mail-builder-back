@@ -16,6 +16,14 @@ export class LayoutResolver {
     return await layoutService.saveLayout(layout, preview, id);
   }
 
+  @Mutation(() => Layout)
+  async newLayout(
+    @Arg("layout") layout: LayoutInput,
+    @Arg("companyId") companyId: number
+  ) : Promise<Layout> {
+    return await layoutService.newLayout(layout, companyId);
+  }
+
   @Query(() => [Companies])
   async getLayout(@Arg("userId") userId: number): Promise<Companies[]> {
     return await layoutService.getLayout(userId);
