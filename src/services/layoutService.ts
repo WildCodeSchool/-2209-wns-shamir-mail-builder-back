@@ -24,4 +24,19 @@ export default {
       }
     });
   },
+  newLayout: async (layout: LayoutInput, companyId: number): Promise<Layout> => {
+    const company = await companiesRepository.findOneByOrFail({id: companyId});
+    if (company) {
+      const newLayout = new Layout();
+      newLayout.name = layout.layout.name;
+      newLayout.description = layout.layout.description as string;
+      newLayout.companyId = company;
+      newLayout.children = [];
+      newLayout.preview = "";
+      newLayout.createdAt = new Date();
+      newLayout.updatedAt = new Date();
+      return await layoutRepository.save(newLayout);
+    }
+    return new Layout();
+  }
 }
