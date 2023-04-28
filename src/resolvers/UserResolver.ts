@@ -102,13 +102,5 @@ export class UserResolver {
         throw new Error("Erreur pendant l'enregistrement de l'abonnement");
       }
     }
-
-    @Query(() => User)
-    async getUserLayout(
-      @Arg('userId') userId: number,
-    ): Promise<User> {
-      return await userService.getUserLayout(userId);
-    }
-  
 };
 

@@ -3,6 +3,8 @@ import { User } from "../entities/User";
 import { Subscription } from "../entities/Subscription";
 import { dataSource } from "../tools/utils";
 import * as argon2 from "argon2";
+import {companiesRepository} from "./layoutService";
+import {Companies} from "../entities/Companies";
 
 export const userRepository: Repository<User> = dataSource.getRepository(User);
 
@@ -39,7 +41,14 @@ export default {
         return await userRepository.save(userToUpdate);
     },
 
-    getUserLayout: async (userId: number): Promise<User> => {
-        return await userRepository.findOneByOrFail({ id: userId });
-    }
+    getUserLayout: async (userId: number): Promise<Companies[]> => {
+        const user = await userRepository.findOneByOrFail({ id: userId });
+        return await companiesRepository.find({
+            where: {
+                userId: {
+                    id: user.id,
+                }
+            },
+        });
+    },
 }
