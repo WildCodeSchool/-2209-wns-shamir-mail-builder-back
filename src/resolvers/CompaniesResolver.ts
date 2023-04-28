@@ -1,7 +1,8 @@
-import { Arg, Authorized, Mutation, Query, Resolver } from "type-graphql";
-import { Companies } from "../entities/Companies";
-import { CompaniesInput } from "../inputs/companiesInput";
+import {Arg, Mutation, Query} from "type-graphql";
+import {Companies} from "../entities/Companies";
+import {CompaniesInput} from "../inputs/companiesInput";
 import companiesService from "../services/companiesService";
+import userService from "../services/userService";
 
 @Resolver(Companies)
 export class CompaniesResolver {
@@ -16,16 +17,10 @@ export class CompaniesResolver {
   }
 
   @Query(() => [Companies])
-  async getUserCompanies()
-  : Promise<Companies[]> {
-    try {
-      const companies = await companiesService.getUserCompanies();
-      console.log('COMPANIES', companies)
-      return companies ? companies : [];
-    } catch (err: any) {
-      //throw new Error("Erreur en recherchant les sociétés liées à l'utilisateur");
-      return err.message;
-    }
+  async getUserLayout(
+    @Arg('userId') userId: number,
+  ): Promise<Companies[]> {
+    return await userService.getUserLayout(userId);
   }
 }
 

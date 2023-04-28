@@ -1,5 +1,5 @@
-import { Arg, Authorized, Mutation, Query, Resolver } from "type-graphql";
-import { Module } from "../entities/Module";
+import {Arg, Mutation, Query} from "type-graphql";
+import {Module} from "../entities/Module";
 import moduleService from "../services/moduleService";
 import { ModuleInput } from "../inputs/moduleInput";
 
@@ -16,6 +16,13 @@ export class ModuleResolver {
     @Arg("module") module: ModuleInput,
   ): Promise<Module> {
     return await moduleService.createModule(module);
+  }
+
+  @Mutation(() => Module)
+  async removeModule(
+    @Arg("id") id: number,
+  ): Promise<Module|{id: number}> {
+    return await moduleService.removeModule(id);
   }
 }
 
