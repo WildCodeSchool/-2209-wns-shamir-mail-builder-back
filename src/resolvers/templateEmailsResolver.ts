@@ -10,9 +10,10 @@ export class TemplateEmailsResolver {
     ): Promise<TemplateEmails[]> {
         try {
             const userTemplates = await templateEmailsService.getUserTemplates(email);
+            console.log("TEMPLATES", userTemplates);
             return userTemplates ? userTemplates : [];
-        } catch (e) {
-            throw new Error('Impossible de trouver des templates pour cet utilisateur.');
+        } catch (err: any) {
+            return err;
         }
     }
 }

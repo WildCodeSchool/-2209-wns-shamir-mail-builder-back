@@ -17,6 +17,7 @@ export default {
 
     getUserTemplates: async (email: string): Promise<TemplateEmails[]> => {
         const user = await userRepository.findOneByOrFail({ email });
+        console.log(user);
         return await templateEmailsRepository.findBy({ userId: user });
     },
 }
