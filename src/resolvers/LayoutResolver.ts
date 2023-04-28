@@ -26,7 +26,13 @@ export class LayoutResolver {
 
   @Query(() => [Companies])
   async getLayout(@Arg("userId") userId: number): Promise<Companies[]> {
-    return await layoutService.getLayout(userId);
+    try {
+      const layouts = await layoutService.getLayout(userId);
+      console.log('LAYOUTS', layouts);
+      return layouts;
+    } catch (err: any) {
+      return err.message;
+    }
   }
 }
 

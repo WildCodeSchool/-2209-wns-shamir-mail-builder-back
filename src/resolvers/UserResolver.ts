@@ -1,4 +1,4 @@
-import { Arg, Mutation, Query, Resolver, Ctx } from "type-graphql";
+import { Arg, Mutation, Query, Resolver, Ctx, Authorized } from "type-graphql";
 import { User } from "../entities/User";
 import userService from "../services/userService";
 import authService from "../services/authService";
@@ -53,6 +53,7 @@ export class UserResolver {
           }
     };
 
+    @Authorized()
     @Mutation(() => User)
     async updateUser(
       @Arg("id") id: number,
@@ -66,6 +67,7 @@ export class UserResolver {
       }
     };
 
+    @Authorized()
     @Mutation(() => User)
     async deleteUser(
         @Arg("id") id: number,
@@ -104,6 +106,7 @@ export class UserResolver {
     }
   }
 
+    @Authorized()
     @Mutation(() => User)
     async saveUserSub(
       @Arg("email") email: string,
@@ -116,6 +119,7 @@ export class UserResolver {
       }
     }
 
+    @Authorized()
     @Query(() => User)
     async getUserLayout(
       @Arg('userId') userId: number,
