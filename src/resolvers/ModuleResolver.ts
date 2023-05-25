@@ -1,5 +1,5 @@
-import {Arg, Mutation, Query} from "type-graphql";
-import {Module} from "../entities/Module";
+import { Arg, Mutation, Query, Authorized, Resolver } from "type-graphql";
+import { Module } from "../entities/Module";
 import moduleService from "../services/moduleService";
 import { ModuleInput } from "../inputs/moduleInput";
 

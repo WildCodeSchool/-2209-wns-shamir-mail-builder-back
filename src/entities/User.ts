@@ -44,7 +44,7 @@ export class User {
   updatedAt?: Date = new Date();
 
   @Field(() => Subscription,{ nullable: true})
-  @OneToOne(() => Subscription, (subscription) => subscription.user, {cascade: true})
+  @OneToOne(() => Subscription, (subscription) => subscription.user, {cascade: true, eager: true })
   @JoinColumn({ name: "subscriptionId" })
   subscriptionId?: Subscription;
 
