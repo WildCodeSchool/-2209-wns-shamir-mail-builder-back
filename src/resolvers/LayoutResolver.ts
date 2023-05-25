@@ -1,12 +1,13 @@
-import {Arg, Mutation, Query, Resolver} from "type-graphql";
-import {LayoutInput} from "../inputs/layoutInput";
+import { Arg, Mutation, Query, Resolver, Authorized } from "type-graphql";
+import { LayoutInput } from "../inputs/layoutInput";
 import layoutService from "../services/layoutService";
 
-import {Layout} from "../entities/Layout";
-import {Companies} from "../entities/Companies";
+import { Layout } from "../entities/Layout";
+import { Companies } from "../entities/Companies";
 
 @Resolver(Layout)
 export class LayoutResolver {
+  @Authorized()
   @Mutation(() => Layout)
   async saveLayout(
     @Arg("layout") layout: LayoutInput,
@@ -16,6 +17,7 @@ export class LayoutResolver {
     return await layoutService.saveLayout(layout, preview, id);
   }
 
+  @Authorized()
   @Mutation(() => Layout)
   async newLayout(
     @Arg("layout") layout: LayoutInput,
@@ -26,7 +28,12 @@ export class LayoutResolver {
 
   @Query(() => [Companies])
   async getLayout(@Arg("userId") userId: number): Promise<Companies[]> {
-    return await layoutService.getLayout(userId);
+    try {
+      const layouts = await layoutService.getLayout(userId);
+      return layouts;
+    } catch (err: any) {
+      return err.message;
+    }
   }
 }
 

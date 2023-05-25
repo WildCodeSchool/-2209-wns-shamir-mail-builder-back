@@ -28,7 +28,7 @@ export class TemplateEmails {
   @Field()
   view_html!: string;
 
-  @Column({ type: "json" })
+  @Column({ type: "json", nullable: true })
   @Field()
   props!: string;
 

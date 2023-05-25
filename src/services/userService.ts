@@ -28,6 +28,15 @@ export default {
         return await userRepository.save(newUser);
     },
 
+    update: async (id: number, username: string, phone: string): Promise<User> => {
+        const userToUpdate = await userRepository.findOneByOrFail({ id });
+        userToUpdate.username = username;
+        userToUpdate.phone = phone;
+        userToUpdate.updatedAt = new Date();
+        userToUpdate.createdAt = userToUpdate.createdAt;
+        return await userRepository.save(userToUpdate);
+    },
+
     deleteOne: async (id: number): Promise<any> => {
         return await userRepository.delete(id);
     },

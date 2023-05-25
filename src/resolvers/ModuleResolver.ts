@@ -1,14 +1,16 @@
-import {Arg, Mutation, Query} from "type-graphql";
-import {Module} from "../entities/Module";
+import { Arg, Mutation, Query, Authorized, Resolver } from "type-graphql";
+import { Module } from "../entities/Module";
 import moduleService from "../services/moduleService";
-import {ModuleInput} from "../inputs/moduleInput";
+import { ModuleInput } from "../inputs/moduleInput";
 
+@Resolver(Module)
 export class ModuleResolver {
   @Query(() => [Module])
   async getAllModules(): Promise<Module[]> {
     return await moduleService.getAll();
   }
 
+  @Authorized()
   @Mutation(() => Module)
   async createModule(
     @Arg("module") module: ModuleInput,
