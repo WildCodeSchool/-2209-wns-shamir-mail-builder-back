@@ -72,7 +72,7 @@ export class UserResolver {
     async deleteUser(
         @Arg("id") id: number,
     ): Promise<string> {
-        const deleted = await userService.deleteOne(id);
+        await userService.deleteOne(id);
         return "ok";
     }
 

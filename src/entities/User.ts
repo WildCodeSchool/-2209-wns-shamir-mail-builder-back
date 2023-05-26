@@ -52,7 +52,7 @@ export class User {
   templateEmails?: TemplateEmails[];
 
   @Field(() => [Companies], { nullable: true })
-  @OneToMany(() => Companies, (companies) => companies.userId, {cascade: true })
+  @OneToMany(() => Companies, (companies) => companies.userId, { cascade: true })
   companies?: Companies[];
 
   @Field(() => [Module], { nullable: true })

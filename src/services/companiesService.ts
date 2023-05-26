@@ -28,11 +28,15 @@ export default {
     }
     return new Companies();
   },
-  getUserCompanies: async (): Promise<Companies[]> => {
-    return await companiesRepository.find({
-      relations: {
-        userId: true
-      }
-    })
+
+  getUserCompanies: async (userId: number): Promise<Companies[]> => {
+    return await companiesRepository.createQueryBuilder('company')
+    .leftJoinAndSelect('company.userId', 'user')
+    .where('company.userId = :userId', { userId })
+    .getMany();
+  },
+
+  getAllCompanies: async (): Promise<Companies[]> => {
+    return await companiesRepository.find();
   },
 }
