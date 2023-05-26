@@ -48,11 +48,26 @@ export class UserResolver {
         ): Promise<User> {
           try {
             return await userService.create(username, password, email, phone);
-          } catch (e) {
+          } catch (err) {
             throw new Error("Erreur pendant la création de l'utilisateur");
           }
     };
 
+    @Authorized()
+    @Mutation(() => User)
+    async updateUser(
+      @Arg("id") id: number,
+      @Arg("username") username: string,
+      @Arg("phone") phone: string,
+    ): Promise<User> {
+      try {
+        return await userService.update(id, username, phone);
+      } catch (err) {
+        throw new Error("Erreur en mettant à jour l'utilisateur");
+      }
+    };
+
+    @Authorized()
     @Mutation(() => User)
     async deleteUser(
         @Arg("id") id: number,
@@ -91,6 +106,7 @@ export class UserResolver {
     }
   }
 
+    @Authorized()
     @Mutation(() => User)
     async saveUserSub(
       @Arg("email") email: string,

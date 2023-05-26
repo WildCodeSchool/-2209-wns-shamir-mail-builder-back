@@ -86,6 +86,6 @@ export class Companies {
   templateEmails!: TemplateEmails[];
 
   @Field(() => [Layout], { nullable: true })
-  @OneToMany(() => Layout, (layout) => layout.companyId, { eager: true })
+  @OneToMany(() => Layout, (layout) => layout.companyId, { eager:true })
   layouts!: Layout[];
 }

@@ -1,6 +1,6 @@
 import {CompaniesInput} from "../inputs/companiesInput";
 import {Companies} from "../entities/Companies";
-import userService from "./userService";
+import userService, { userRepository } from "./userService";
 import {companiesRepository} from "./layoutService";
 import {User} from "../entities/User";
 
@@ -27,5 +27,12 @@ export default {
       return await companiesRepository.save(newCompany);
     }
     return new Companies();
-  }
+  },
+  getUserCompanies: async (): Promise<Companies[]> => {
+    return await companiesRepository.find({
+      relations: {
+        userId: true
+      }
+    })
+  },
 }
