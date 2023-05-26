@@ -24,11 +24,20 @@ export class CompaniesResolver {
     return await userService.getUserLayout(userId);
   }
 
-  @Authorized()
+  //@Authorized()
   @Query(() => [Companies])
-  async getUserCompanies()
+  async getUserCompanies(
+    @Arg("userId") userId: number,
+  )
   : Promise<Companies[]> {
-    return await companiesService.getUserCompanies();
+    return await companiesService.getUserCompanies(userId);
   }
+
+  @Query(() => [Companies])
+  async getAllCompanies()
+  : Promise<Companies[]> {
+    return await companiesService.getAllCompanies();
+  }
+
 }
 

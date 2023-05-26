@@ -75,9 +75,10 @@ export class Companies {
   @Field()
   updatedAt!: Date;
 
+  @Field(() => User, { nullable: true })
   @ManyToOne(() => User, (user) => user.companies, { onDelete: "CASCADE" })
   @JoinColumn({ name: "userId" })
-  userId!: User;
+  userId?: User;
 
   @OneToMany(() => MailSends, (mailSends) => mailSends.companyId)
   mailSends!: MailSends[];
