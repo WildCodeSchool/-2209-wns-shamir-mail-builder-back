@@ -1,8 +1,8 @@
-import { Arg, Mutation, Query, Resolver, Ctx, Authorized } from "type-graphql";
-import { User } from "../entities/User";
+import {Arg, Mutation, Query, Resolver} from "type-graphql";
+import {User} from "../entities/User";
 import userService from "../services/userService";
 import authService from "../services/authService";
-import { SubscriptionInput } from "../inputs/subscriptionInput";
+import {SubscriptionInput} from "../inputs/subscriptionInput";
 
 @Resolver(User)
 export class UserResolver {
@@ -116,6 +116,18 @@ export class UserResolver {
         return await userService.saveUserSub(email, subscription);
       } catch (e) {
         throw new Error("Erreur pendant l'enregistrement de l'abonnement");
+      }
+    }
+
+    @Mutation(() => User)
+    async verifyToken(
+      @Arg("token") token: string,
+    ): Promise<User> {
+      try {
+        const payload: any = authService.verifyToken(token);
+        return await userService.getByEmail(payload.email);
+      } catch (e) {
+        throw new Error("Erreur pendant la vérification du token");
       }
     }
 };
