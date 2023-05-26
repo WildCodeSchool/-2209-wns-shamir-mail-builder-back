@@ -9,11 +9,12 @@ import {LayoutResolver} from "../resolvers/LayoutResolver";
 import { TemplateEmailsResolver } from "../resolvers/templateEmailsResolver";
 import { CompaniesResolver } from "../resolvers/CompaniesResolver";
 import {ModuleResolver} from "../resolvers/ModuleResolver";
+import {MailSendsResolver} from "../resolvers/MailSendsResolver";
 
 async function createServer(): Promise<ApolloServer> {
     await dataSource.initialize();
     const schema = await buildSchema({
-      resolvers: [UserResolver, StripeResolver, SubscriptionResolver, LayoutResolver, TemplateEmailsResolver, CompaniesResolver, ModuleResolver],
+      resolvers: [UserResolver, StripeResolver, SubscriptionResolver, LayoutResolver, TemplateEmailsResolver, CompaniesResolver, ModuleResolver, MailSendsResolver],
 
       validate: { forbidUnknownValues: false },
       authChecker: ({ context }, roles) => {
