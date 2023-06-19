@@ -1,8 +1,8 @@
-import {Arg, Mutation, Query, Resolver} from "type-graphql";
-import {User} from "../entities/User";
+import { Arg, Mutation, Query, Resolver, Authorized } from "type-graphql";
+import { User } from "../entities/User";
 import userService from "../services/userService";
 import authService from "../services/authService";
-import {SubscriptionInput} from "../inputs/subscriptionInput";
+import { SubscriptionInput } from "../inputs/SubscriptionInput";
 
 @Resolver(User)
 export class UserResolver {

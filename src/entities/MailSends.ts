@@ -1,4 +1,4 @@
-import { Companies } from "./Companies";
+import { Company } from "./Company";
 import { Field, ObjectType } from "type-graphql";
 import {
   Column,
@@ -43,7 +43,7 @@ export class MailSends {
   @Field()
   updatedAt!: Date;
 
-  @ManyToOne(() => Companies, (companies) => companies.mailSends)
+  @ManyToOne(() => Company, (company) => company.mailSends)
   @JoinColumn({ name: "companyId" })
-  companyId!: Companies;
+  companyId!: Company;
 }

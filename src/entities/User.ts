@@ -9,9 +9,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { Companies } from "./Companies";
+import { Company } from "./Company";
 import { Subscription } from "./Subscription";
-import { TemplateEmails } from "./TemplateEmails";
 import {Module} from "./Module";
 
 @ObjectType()
@@ -48,12 +47,9 @@ export class User {
   @JoinColumn({ name: "subscriptionId" })
   subscriptionId?: Subscription;
 
-  @OneToMany(() => TemplateEmails, (templateEmails) => templateEmails.userId)
-  templateEmails?: TemplateEmails[];
-
-  @Field(() => [Companies], { nullable: true })
-  @OneToMany(() => Companies, (companies) => companies.userId, { cascade: true })
-  companies?: Companies[];
+  @Field(() => [Company], { nullable: true })
+  @OneToMany(() => Company, (company) => company.userId, { cascade: true })
+  companyId?: Company[];
 
   @Field(() => [Module], { nullable: true })
   @OneToMany(() => Module, (module) => module.user, {cascade: true})

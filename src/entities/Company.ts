@@ -1,4 +1,3 @@
-import { TemplateEmails } from "./TemplateEmails";
 import { MailSends } from "./MailSends";
 import {
   Column,
@@ -14,7 +13,7 @@ import {Layout} from "./Layout";
 
 @ObjectType()
 @Entity()
-export class Companies {
+export class Company {
   @Field()
   @PrimaryGeneratedColumn()
   id!: number;
@@ -76,15 +75,12 @@ export class Companies {
   updatedAt!: Date;
 
   @Field(() => User, { nullable: true })
-  @ManyToOne(() => User, (user) => user.companies, { onDelete: "CASCADE" })
+  @ManyToOne(() => User, (user) => user.companyId, { onDelete: "CASCADE" })
   @JoinColumn({ name: "userId" })
   userId?: User;
 
   @OneToMany(() => MailSends, (mailSends) => mailSends.companyId)
   mailSends!: MailSends[];
-
-  @OneToMany(() => TemplateEmails, (templateEmails) => templateEmails.companyId)
-  templateEmails!: TemplateEmails[];
 
   @Field(() => [Layout], { nullable: true })
   @OneToMany(() => Layout, (layout) => layout.companyId, { eager:true })
