@@ -8,7 +8,7 @@ import {
   UpdateDateColumn
 } from "typeorm";
 import {Field, ObjectType} from "type-graphql";
-import {Companies} from "./Companies";
+import {Company} from "./Company";
 import {GraphQLScalarType, Kind} from "graphql";
 
 export const ObjectIdScalar = new GraphQLScalarType({
@@ -62,7 +62,7 @@ export class Layout {
   @Field()
   updatedAt!: Date;
 
-  @ManyToOne(() => Companies , (companies) => companies.layouts)
+  @ManyToOne(() => Company, (company) => company.layouts)
   @JoinColumn({ name: "companyId" })
-  companyId!: Companies;
+  companyId!: Company;
 }

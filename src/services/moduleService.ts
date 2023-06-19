@@ -1,7 +1,7 @@
 import {Module} from "../entities/Module";
 import {Repository} from "typeorm";
 import {dataSource} from "../tools/utils";
-import {ModuleInput} from "../inputs/moduleInput";
+import {ModuleInput} from "../inputs/ModuleInput";
 import {User} from "../entities/User";
 
 export const moduleRepository: Repository<Module> = dataSource.getRepository(Module);

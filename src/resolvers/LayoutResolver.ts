@@ -1,9 +1,9 @@
 import { Arg, Mutation, Query, Resolver, Authorized } from "type-graphql";
-import { LayoutInput } from "../inputs/layoutInput";
+import { LayoutInput } from "../inputs/LayoutInput";
 import layoutService from "../services/layoutService";
 
 import { Layout } from "../entities/Layout";
-import { Companies } from "../entities/Companies";
+import { Company } from "../entities/Company";
 
 @Resolver(Layout)
 export class LayoutResolver {
@@ -26,10 +26,11 @@ export class LayoutResolver {
     return await layoutService.newLayout(layout, companyId);
   }
 
-  @Query(() => [Companies])
-  async getLayout(@Arg("userId") userId: number): Promise<Companies[]> {
+  @Authorized()
+  @Query(() => [Company])
+  async getLayouts(@Arg("userId") userId: number): Promise<Company[]> {
     try {
-      const layouts = await layoutService.getLayout(userId);
+      const layouts = await layoutService.getLayouts(userId);
       return layouts;
     } catch (err: any) {
       return err.message;

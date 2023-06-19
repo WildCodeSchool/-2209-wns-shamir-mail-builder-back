@@ -1,7 +1,7 @@
 import { Arg, Mutation, Query, Authorized, Resolver } from "type-graphql";
 import { Module } from "../entities/Module";
 import moduleService from "../services/moduleService";
-import { ModuleInput } from "../inputs/moduleInput";
+import { ModuleInput } from "../inputs/ModuleInput";
 
 @Resolver(Module)
 export class ModuleResolver {

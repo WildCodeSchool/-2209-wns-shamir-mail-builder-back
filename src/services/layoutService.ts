@@ -1,12 +1,12 @@
 import {Repository} from "typeorm";
 import {dataSource} from "../tools/utils";
-import {LayoutInput} from "../inputs/layoutInput";
-import {Companies} from "../entities/Companies";
+import {LayoutInput} from "../inputs/LayoutInput";
+import {Company} from "../entities/Company";
 import {Layout} from "../entities/Layout";
 import { userRepository } from "./userService";
 
 export const layoutRepository: Repository<Layout> = dataSource.getRepository(Layout);
-export const companiesRepository: Repository<Companies> = dataSource.getRepository(Companies);
+export const companiesRepository: Repository<Company> = dataSource.getRepository(Company);
 export default {
   saveLayout: async (layoutInput: LayoutInput, preview: string, id: number): Promise<Layout> => {
     const layout = await layoutRepository.findOneByOrFail({id: id});
@@ -16,7 +16,8 @@ export default {
     }
     return await layoutRepository.save(layout);
   },
-  getLayout: async (userId: number): Promise<Companies[]> => {
+
+  getLayouts: async (userId: number): Promise<Company[]> => {
     const user = await userRepository.findOneByOrFail({ id: userId })
     return await companiesRepository.find({
       where: {
@@ -27,6 +28,7 @@ export default {
       }
     });
   },
+
   newLayout: async (layout: LayoutInput, companyId: number): Promise<Layout> => {
     const company = await companiesRepository.findOneByOrFail({id: companyId});
     if (company) {
