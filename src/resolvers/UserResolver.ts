@@ -118,5 +118,17 @@ export class UserResolver {
         throw new Error("Erreur pendant l'enregistrement de l'abonnement");
       }
     }
+
+    @Mutation(() => User)
+    async verifyToken(
+      @Arg("token") token: string,
+    ): Promise<User> {
+      try {
+        const payload: any = authService.verifyToken(token);
+        return await userService.getByEmail(payload.email);
+      } catch (e) {
+        throw new Error("Erreur pendant la vérification du token");
+      }
+    }
 };
 

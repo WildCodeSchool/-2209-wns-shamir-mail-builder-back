@@ -8,6 +8,7 @@ import { SubscriptionResolver } from "../resolvers/SubscriptionResolver";
 import {LayoutResolver} from "../resolvers/LayoutResolver";
 import { CompanyResolver } from "../resolvers/CompanyResolver";
 import {ModuleResolver} from "../resolvers/ModuleResolver";
+import {MailSendsResolver} from "../resolvers/MailSendsResolver";
 
 async function createServer(): Promise<ApolloServer> {
     await dataSource.initialize();
