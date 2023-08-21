@@ -1,8 +1,13 @@
 import nodemailer from "nodemailer";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config();
-export default {
-  async sendEmail(email: string, subject: string, message: string): Promise<{
+
+export class MailService {
+  static async sendEmail(
+    email: string,
+    subject: string,
+    message: string
+  ): Promise<{
     error: boolean;
     message: string;
   }> {
@@ -24,7 +29,7 @@ export default {
       to: email,
       subject: subject,
       html: message,
-    }
+    };
 
     await new Promise((resolve, reject) => {
       transport.sendMail(mailOptions, (error: Error | null, info) => {
@@ -50,5 +55,5 @@ export default {
         message: "Email failed to send",
       };
     }
-  },
-};
+  }
+}

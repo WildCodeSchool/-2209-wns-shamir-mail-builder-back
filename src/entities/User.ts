@@ -11,7 +11,7 @@ import {
 } from "typeorm";
 import { Company } from "./Company";
 import { Subscription } from "./Subscription";
-import {Module} from "./Module";
+import { Module } from "./Module";
 
 @ObjectType()
 @Entity()
@@ -27,11 +27,11 @@ export class User {
   @Column()
   hashedPassword!: string;
 
-  @Column({unique: true})
+  @Column({ unique: true })
   @Field()
   email!: string;
-  
-  @Column({ nullable: true})
+
+  @Column({ nullable: true })
   @Field()
   phone!: string;
 
@@ -42,8 +42,11 @@ export class User {
   @UpdateDateColumn()
   updatedAt?: Date = new Date();
 
-  @Field(() => Subscription,{ nullable: true})
-  @OneToOne(() => Subscription, (subscription) => subscription.user, {cascade: true, eager: true })
+  @Field(() => Subscription, { nullable: true })
+  @OneToOne(() => Subscription, (subscription) => subscription.user, {
+    cascade: true,
+    eager: true,
+  })
   @JoinColumn({ name: "subscriptionId" })
   subscriptionId?: Subscription;
 
@@ -52,6 +55,6 @@ export class User {
   companyId?: Company[];
 
   @Field(() => [Module], { nullable: true })
-  @OneToMany(() => Module, (module) => module.user, {cascade: true})
+  @OneToMany(() => Module, (module) => module.user, { cascade: true })
   modules?: Module[];
 }

@@ -1,11 +1,13 @@
-import {CompanyInput} from "../inputs/CompanyInput";
-import {Company} from "../entities/Company";
+import { CompanyInput } from "../inputs/CompanyInput";
+import { Company } from "../entities/Company";
 import userService, { userRepository } from "./userService";
-import {companiesRepository} from "./layoutService";
-import {User} from "../entities/User";
+import { companiesRepository } from "./layoutService";
 
-export default {
-  createCompany: async (company: CompanyInput, userEmail: string): Promise<Company> => {
+export class CompanyService {
+  static async createCompany(
+    company: CompanyInput,
+    userEmail: string
+  ): Promise<Company> {
     const user = await userService.getByEmail(userEmail);
     if (user) {
       const newCompany = new Company();
@@ -27,28 +29,28 @@ export default {
       return await companiesRepository.save(newCompany);
     }
     return new Company();
-  },
+  }
 
-  getUserCompanies: async (userId: number): Promise<Company[]> => {
-    return await companiesRepository.createQueryBuilder('company')
-    .leftJoinAndSelect('company.userId', 'user')
-    .where('company.userId = :userId', { userId })
-    .getMany();
-  },
+  static async getUserCompanies(userId: number): Promise<Company[]> {
+    return await companiesRepository
+      .createQueryBuilder("company")
+      .leftJoinAndSelect("company.userId", "user")
+      .where("company.userId = :userId", { userId })
+      .getMany();
+  }
 
-  getAllCompanies: async (): Promise<Company[]> => {
+  static async getAllCompanies(): Promise<Company[]> {
     return await companiesRepository.find();
-  },
+  }
 
-  getUserLayouts: async (userId: number): Promise<Company[]> => {
+  static async getUserLayouts(userId: number): Promise<Company[]> {
     const user = await userRepository.findOneByOrFail({ id: userId });
     return await companiesRepository.find({
-        where: {
-            userId: {
-                id: user.id,
-            }
+      where: {
+        userId: {
+          id: user.id,
         },
+      },
     });
-},
-  
+  }
 }

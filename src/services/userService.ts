@@ -21,7 +21,6 @@ export default {
         newUser.hashedPassword = await argon2.hash(password);
         newUser.email = email;
         newUser.phone = phone;
-        console.log(newUser);
         
         return await userRepository.save(newUser);
     },
@@ -36,7 +35,9 @@ export default {
     },
 
     deleteOne: async (id: number): Promise<any> => {
-        return await userRepository.delete(id);
+        return await userRepository.delete({
+            id: id
+        });
     },
 
     saveUserSub: async (email: string, subscription: Subscription): Promise<User> => {

@@ -26,7 +26,7 @@ services:
     volumes:
       - ./dbDataTest:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d mail-builder-test -U test" ]
+      test: ["CMD-SHELL", "pg_isready -d mail-builder-test -U test"]
       interval: 5s
       timeout: 5s
       retries: 10
