@@ -51,7 +51,9 @@ export class User {
   subscriptionId?: Subscription;
 
   @Field(() => [Company], { nullable: true })
-  @OneToMany(() => Company, (company) => company.userId, { cascade: true })
+  @OneToMany(() => Company, (company) => company.userId, {
+    cascade: true,
+  })
   companyId?: Company[];
 
   @Field(() => [Module], { nullable: true })

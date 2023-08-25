@@ -51,6 +51,14 @@ export class CompanyService {
           id: user.id,
         },
       },
+      relations: {
+        userId: true,
+      },
+      order: {
+        layouts: {
+          createdAt: "ASC",
+        },
+      },
     });
   }
 }

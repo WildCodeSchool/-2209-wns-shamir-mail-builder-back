@@ -4,6 +4,7 @@ services:
   back:
     image: brandonsev/mailsaw-server
     command: sh -c "npm run build && npm run prod"
+    container_name: back_mailbuilder
     ports:
       - 5000:5000
     env_file:
@@ -13,16 +14,24 @@ services:
     depends_on:
       db:
         condition: service_healthy
-  
+
   db:
     image: postgres
     restart: always
     env_file:
       - .env
     volumes:
-      - /dbData:/var/lib/postgresql/data/customDataFolder
+      - dbData:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d mail-builder -U bragagre" ]
+      test: ["CMD-SHELL", "pg_isready -d mail-builder -U bragagre"]
       interval: 5s
       timeout: 5s
       retries: 10
+
+networks:
+  default:
+    name: web
+    external: true
+
+volumes:
+  dbData:
