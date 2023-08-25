@@ -5,31 +5,28 @@ import {
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
 } from "typeorm";
-import {Field, ObjectType} from "type-graphql";
-import {Company} from "./Company";
-import {GraphQLScalarType, Kind} from "graphql";
+import { Field, ObjectType } from "type-graphql";
+import { Company } from "./Company";
+import { GraphQLScalarType, Kind } from "graphql";
 
 export const ObjectIdScalar = new GraphQLScalarType({
   name: "LayoutJSON",
   description: "Scalar type for layout JSON",
   parseValue(value) {
-    console.log("parseValue", value);
     return value;
-  } ,
+  },
   serialize(value) {
-    console.log("serialize", value);
     return value;
-  } ,
+  },
   parseLiteral(ast) {
     if (ast.kind === Kind.STRING) {
       return ast.value;
     }
     return null;
-  }
+  },
 });
-
 
 @Entity()
 @ObjectType()
@@ -47,11 +44,11 @@ export class Layout {
   description!: string;
 
   @Field(() => ObjectIdScalar)
-  @Column({type: 'jsonb', nullable: true})
-  children!: object
+  @Column({ type: "jsonb", nullable: true })
+  children!: object;
 
   @Field()
-  @Column({ nullable: true})
+  @Column({ nullable: true })
   preview!: string;
 
   @CreateDateColumn()

@@ -16,7 +16,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
-  
+
   db:
     image: postgres
     restart: always
@@ -28,7 +28,7 @@ services:
     volumes:
       - ./dbData:/var/lib/postgresql/data/customDataFolder
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d mail-builder -U bragagre" ]
+      test: ["CMD-SHELL", "pg_isready -d mail-builder -U bragagre"]
       interval: 5s
       timeout: 5s
       retries: 10

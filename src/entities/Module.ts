@@ -1,25 +1,29 @@
-import {Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
-import {GraphQLScalarType, Kind} from "graphql";
-import {Field, ObjectType} from "type-graphql";
-import {User} from "./User";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { GraphQLScalarType, Kind } from "graphql";
+import { Field, ObjectType } from "type-graphql";
+import { User } from "./User";
 
 export const PreviewObject = new GraphQLScalarType({
   name: "ModulePreview",
   description: "Scalar type for Module Preview JSON",
   parseValue(value) {
-    console.log("parseValue", value);
     return value;
-  } ,
+  },
   serialize(value) {
-    console.log("serialize", value);
     return value;
-  } ,
+  },
   parseLiteral(ast) {
     if (ast.kind === Kind.STRING) {
       return ast.value;
     }
     return null;
-  }
+  },
 });
 
 @ObjectType()
@@ -37,11 +41,11 @@ export class Module {
   @Field()
   preview!: string;
 
-  @Column({type: 'jsonb', nullable: true, default: []})
+  @Column({ type: "jsonb", nullable: true, default: [] })
   @Field(() => PreviewObject)
   render!: object;
 
-  @ManyToOne(() => User, user => user.modules)
+  @ManyToOne(() => User, (user) => user.modules)
   @JoinColumn({ name: "userId" })
   user!: User;
 }

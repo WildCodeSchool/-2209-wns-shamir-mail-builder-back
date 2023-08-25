@@ -91,10 +91,10 @@ export class UserResolver {
 
         return token;
       } else {
-        throw new Error();
+        throw new Error("Mot de passe incorrect");
       }
     } catch (e) {
-      throw new Error("Mot de passe incorrect");
+      throw new Error("Erreur pendant la connexion");
     }
   }
 
