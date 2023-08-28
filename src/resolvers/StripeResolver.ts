@@ -17,8 +17,14 @@ export class StripeResolver {
         },
       ],
       mode: "subscription",
-      success_url: process.env.FRONTEND_DOMAIN + "/sub/success",
-      cancel_url: process.env.FRONTEND_DOMAIN + "/sub/cancel",
+      success_url:
+        process.env.NODE_ENV === "production"
+          ? process.env.FRONTEND_DOMAIN_PROD
+          : process.env.FRONTEND_DOMAIN + "/sub/success",
+      cancel_url:
+        process.env.NODE_ENV === "production"
+          ? process.env.FRONTEND_DOMAIN_PROD
+          : process.env.FRONTEND_DOMAIN + "/sub/cancel",
     });
     return JSON.stringify({
       url: session.url,
