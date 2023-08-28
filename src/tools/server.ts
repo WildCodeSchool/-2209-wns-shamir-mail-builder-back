@@ -38,7 +38,7 @@ async function createServer(): Promise<ApolloServer> {
   return new ApolloServer({
     schema,
     cors: {
-      origin: "*.brandon-seveste.fr",
+      origin: "https://mailbuilder.brandon-seveste.fr",
       credentials: true,
     },
     context: ({ req }) => {
